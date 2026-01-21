@@ -13,7 +13,7 @@
     <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/000000/discord-logo.png">
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- Navbar ATUALIZADA -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
@@ -26,8 +26,8 @@
             <div class="nav-links">
                 <a href="#home">Início</a>
                 <a href="#stats">Estatísticas</a>
-                <a href="#pricing">Planos</a>
-                <a href="compras.html" class="btn-buy-now" target="_blank">
+                <a href="#story">História</a> <!-- HISTÓRIA DE VOLTA -->
+                <a href="#comprar" class="btn-buy-now"> <!-- AGORA VAI PARA SEÇÃO #comprar -->
                     <i class="fas fa-bolt"></i> Adquira o Seu!
                 </a>
                 <a href="https://discord.gg/seu-link" class="btn-discord" target="_blank">
@@ -84,8 +84,8 @@
                 </p>
                 
                 <div class="hero-buttons">
-                    <a href="#pricing" class="btn-primary">
-                        <i class="fas fa-rocket"></i> Ver Planos
+                    <a href="#comprar" class="btn-primary"> <!-- AGORA VAI PARA #comprar -->
+                        <i class="fas fa-rocket"></i> Adquirir Agora
                     </a>
                     <a href="https://discord.com/oauth2/authorize?client_id=SEU_CLIENT_ID" class="btn-secondary" target="_blank">
                         <i class="fas fa-robot"></i> Testar Demo
@@ -238,14 +238,67 @@
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section id="products" class="products">
+    <!-- Nossa História Section (DE VOLTA!) -->
+    <section id="story" class="our-story">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🎮 Nossos <span class="gradient-text">Produtos</span></h2>
-                <p class="section-subtitle">Escolha módulos individuais ou o bot completo</p>
+                <h2 class="section-title">📖 Nossa <span class="gradient-text">História</span></h2>
+                <p class="section-subtitle">De uma ideia simples à referência em bots Discord</p>
             </div>
             
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 • Janeiro</div>
+                    <div class="timeline-content">
+                        <h3>🌱 O Início</h3>
+                        <p>Tudo começou com um problema: administrar servidores grandes era caótico. Desenvolvemos nosso primeiro sistema de tickets para um servidor de 5k membros.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 • Junho</div>
+                    <div class="timeline-content">
+                        <h3>🚀 Primeiro Cliente</h3>
+                        <p>Hospital APP se tornou nosso primeiro cliente oficial. Desenvolvemos sistemas customizados que reduziram o trabalho manual da staff em 80%.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023 • Março</div>
+                    <div class="timeline-content">
+                        <h3>🏆 Reconhecimento</h3>
+                        <p>Chegamos a 100 servidores ativos. Nossos bots estavam sendo usados em comunidades de até 50k membros com performance impecável.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023 • Setembro</div>
+                    <div class="timeline-content">
+                        <h3>💼 Expansão</h3>
+                        <p>Lançamos a plataforma modular - agora cada servidor podia escolher exatamente o que precisava, sem pagar por features desnecessárias.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 • Hoje</div>
+                    <div class="timeline-content">
+                        <h3>✅ Referência</h3>
+                        <p>Mais de 500 servidores ativos, 2.8k+ bots online e uma equipe dedicada de 8 desenvolvedores. Continuamos inovando todos os dias.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção COMPRAR (ao invés de Planos) -->
+    <section id="comprar" class="comprar-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🛒 <span class="gradient-text">Adquira seu WaveX</span></h2>
+                <p class="section-subtitle">Escolha o melhor para seu servidor Discord</p>
+            </div>
+            
+            <!-- Produtos Individuais -->
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-icon">
@@ -261,7 +314,6 @@
                         <li><i class="fas fa-check"></i> Fechamento automático</li>
                         <li><i class="fas fa-check"></i> Sistema de logs completo</li>
                         <li><i class="fas fa-check"></i> Multi-staff support</li>
-                        <li><i class="fas fa-check"></i> Categorias personalizáveis</li>
                     </ul>
                     <div class="product-price">
                         <span class="price">R$ 29,90</span>
@@ -287,7 +339,6 @@
                         <li><i class="fas fa-check"></i> Aprovação/recusa por staff</li>
                         <li><i class="fas fa-check"></i> Alteração automática de nick</li>
                         <li><i class="fas fa-check"></i> Remoção de cargo visitante</li>
-                        <li><i class="fas fa-check"></i> Verificação de ID único</li>
                     </ul>
                     <div class="product-price">
                         <span class="price">R$ 34,90</span>
@@ -312,7 +363,6 @@
                         <li><i class="fas fa-check"></i> Atribuição automática</li>
                         <li><i class="fas fa-check"></i> Sistema de promoções</li>
                         <li><i class="fas fa-check"></i> Logs de alterações</li>
-                        <li><i class="fas fa-check"></i> Painel de controle</li>
                     </ul>
                     <div class="product-price">
                         <span class="price">R$ 24,90</span>
@@ -323,100 +373,36 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">💰 <span class="gradient-text">Planos</span> & Preços</h2>
-                <p class="section-subtitle">Escolha o plano perfeito para seu servidor</p>
+            
+            <!-- Pacote Completo -->
+            <div class="section-header" style="margin-top: 80px;">
+                <h3 class="section-title">📦 <span class="gradient-text">Pacote Completo</span></h3>
+                <p class="section-subtitle">Leve todos os módulos com desconto especial</p>
             </div>
             
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Módulo Individual</h3>
-                        <div class="pricing-price">
-                            <span class="price">R$ <span id="individualPrice">29,90</span></span>
-                            <span class="period">/ módulo</span>
-                        </div>
-                        <p>Escolha apenas o que precisa</p>
+            <div class="pricing-card featured" style="max-width: 500px; margin: 0 auto;">
+                <div class="pricing-badge">ECONOMIZE 30%</div>
+                <div class="pricing-header">
+                    <h3>WaveX Completo</h3>
+                    <div class="pricing-price">
+                        <span class="price">R$ 62,90</span>
+                        <span class="period">/ único</span>
+                        <span class="discount">De R$ 89,70</span>
                     </div>
-                    
-                    <div class="pricing-features">
-                        <div class="feature-selector">
-                            <label class="checkbox">
-                                <input type="checkbox" checked onclick="updatePrice()">
-                                <span class="checkmark"></span>
-                                Sistema de Tickets (+R$ 29,90)
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" onclick="updatePrice()">
-                                <span class="checkmark"></span>
-                                Sistema de Sets (+R$ 34,90)
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" onclick="updatePrice()">
-                                <span class="checkmark"></span>
-                                Sistema de Cargos (+R$ 24,90)
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-pricing" onclick="addCartIndividual()">
-                        <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
-                    </button>
+                    <p>Todos os módulos + bônus exclusivos</p>
                 </div>
                 
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">ECONOMIZE 30%</div>
-                    <div class="pricing-header">
-                        <h3>Pacote Completo</h3>
-                        <div class="pricing-price">
-                            <span class="price">R$ 62,90</span>
-                            <span class="period">/ único</span>
-                            <span class="discount">De R$ 89,70</span>
-                        </div>
-                        <p>Todos os módulos + bônus exclusivos</p>
-                    </div>
-                    
-                    <div class="pricing-features">
-                        <p><i class="fas fa-check"></i> Sistema de Tickets</p>
-                        <p><i class="fas fa-check"></i> Sistema de Sets</p>
-                        <p><i class="fas fa-check"></i> Sistema de Cargos</p>
-                        <p><i class="fas fa-check"></i> Suporte Premium 6 meses</p>
-                        <p><i class="fas fa-check"></i> Instalação assistida</p>
-                    </div>
-                    
-                    <button class="btn-pricing" onclick="addToCart('Pacote Completo WaveX', 62.90, 'complete')">
-                        <i class="fas fa-gem"></i> Comprar Agora
-                    </button>
+                <div class="pricing-features">
+                    <p><i class="fas fa-check"></i> Sistema de Tickets</p>
+                    <p><i class="fas fa-check"></i> Sistema de Sets</p>
+                    <p><i class="fas fa-check"></i> Sistema de Cargos</p>
+                    <p><i class="fas fa-check"></i> Suporte Premium 6 meses</p>
+                    <p><i class="fas fa-check"></i> Instalação assistida</p>
                 </div>
                 
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Plano Mensal</h3>
-                        <div class="pricing-price">
-                            <span class="price">R$ 19,90</span>
-                            <span class="period">/ mês</span>
-                        </div>
-                        <p>Ideal para testar todos os recursos</p>
-                    </div>
-                    
-                    <div class="pricing-features">
-                        <p><i class="fas fa-check"></i> Todos os módulos</p>
-                        <p><i class="fas fa-check"></i> Atualizações automáticas</p>
-                        <p><i class="fas fa-check"></i> Suporte básico</p>
-                        <p><i class="fas fa-check"></i> Cancelamento a qualquer hora</p>
-                        <p><i class="fas fa-check"></i> 14 dias de garantia</p>
-                    </div>
-                    
-                    <button class="btn-pricing" onclick="addToCart('Plano Mensal WaveX', 19.90, 'mensal')">
-                        <i class="fas fa-calendar-alt"></i> Assinar
-                    </button>
-                </div>
+                <button class="btn-pricing" onclick="addToCart('Pacote Completo WaveX', 62.90, 'complete')">
+                    <i class="fas fa-gem"></i> Comprar Agora
+                </button>
             </div>
         </div>
     </section>
@@ -513,18 +499,18 @@
                 
                 <div class="footer-links">
                     <h4>Produtos</h4>
-                    <a href="#products">Sistema de Tickets</a>
-                    <a href="#products">Sistema de Sets</a>
-                    <a href="#products">Sistema de Cargos</a>
-                    <a href="#pricing">Planos e Preços</a>
+                    <a href="#comprar">Sistema de Tickets</a>
+                    <a href="#comprar">Sistema de Sets</a>
+                    <a href="#comprar">Sistema de Cargos</a>
+                    <a href="#comprar">Pacote Completo</a>
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Suporte</h4>
+                    <h4>WaveX</h4>
+                    <a href="#home">Início</a>
+                    <a href="#story">Nossa História</a>
+                    <a href="#why">Por que WaveX?</a>
                     <a href="#contact">Contato</a>
-                    <a href="#">Documentação</a>
-                    <a href="#">Tutoriais</a>
-                    <a href="#">FAQ</a>
                 </div>
                 
                 <div class="footer-newsletter">
