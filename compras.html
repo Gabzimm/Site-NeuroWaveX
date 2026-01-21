@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar WaveX • Bots Discord</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/000000/discord-logo.png">
+</head>
+<body>
+    <!-- Navbar simplificada -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">Wave<span class="logo-highlight">X</span></span>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">← Voltar ao Site</a>
+                <a href="#" class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carrinho Sidebar (mesmo do index.html) -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Seu Carrinho</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-total">
+            <p>Total: <span id="cartTotal">R$ 0,00</span></p>
+        </div>
+        <div class="cart-actions">
+            <button class="btn-clear" onclick="clearCart()">Limpar Carrinho</button>
+            <button class="btn-checkout" onclick="checkout()">Finalizar Compra</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Página de Compras -->
+    <section class="hero" style="padding: 120px 0 80px;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">🛒 <span class="gradient-text">Adquira seu WaveX</span></h1>
+                <p class="section-subtitle">Escolha o melhor plano para seu servidor Discord</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Todos os Produtos -->
+    <section id="all-products" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🎮 Todos os Produtos</h2>
+                <p class="section-subtitle">Compre módulos individuais ou o pacote completo</p>
+            </div>
+            
+            <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <!-- Produtos individuais -->
+                <div class="product-card">
+                    <div class="product-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="product-title">Sistema de Tickets</h3>
+                    <p class="product-description">
+                        Sistema completo de tickets com painel interativo e logs.
+                    </p>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check"></i> Painel com botão</li>
+                        <li><i class="fas fa-check"></i> Fechamento automático</li>
+                        <li><i class="fas fa-check"></i> Logs completos</li>
+                        <li><i class="fas fa-check"></i> Multi-staff</li>
+                    </ul>
+                    <div class="product-price">
+                        <span class="price">R$ 29,90</span>
+                        <span class="period">/ único</span>
+                    </div>
+                    <button class="btn-product" onclick="addToCart('Sistema de Tickets', 29.90, 'tickets')">
+                        <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                    </button>
+                </div>
+                
+                <div class="product-card featured">
+                    <div class="product-badge">MAIS VENDIDO</div>
+                    <div class="product-icon">
+                        <i class="fas fa-user-tag"></i>
+                    </div>
+                    <h3 class="product-title">Sistema de Sets</h3>
+                    <p class="product-description">
+                        Aprovação automática de sets com alteração de nickname.
+                    </p>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check"></i> Modal interativo</li>
+                        <li><i class="fas fa-check"></i> Aprovação por staff</li>
+                        <li><i class="fas fa-check"></i> Alteração de nick</li>
+                        <li><i class="fas fa-check"></i> Verificação de ID</li>
+                    </ul>
+                    <div class="product-price">
+                        <span class="price">R$ 34,90</span>
+                        <span class="period">/ único</span>
+                    </div>
+                    <button class="btn-product" onclick="addToCart('Sistema de Sets', 34.90, 'sets')">
+                        <i class="fas fa-bolt"></i> Adicionar ao Carrinho
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="product-title">Sistema de Cargos</h3>
+                    <p class="product-description">
+                        Gerenciamento hierárquico de cargos automático.
+                    </p>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check"></i> Sistema hierárquico</li>
+                        <li><i class="fas fa-check"></i> Atribuição automática</li>
+                        <li><i class="fas fa-check"></i> Sistema de promoções</li>
+                        <li><i class="fas fa-check"></i> Logs de alterações</li>
+                    </ul>
+                    <div class="product-price">
+                        <span class="price">R$ 24,90</span>
+                        <span class="period">/ único</span>
+                    </div>
+                    <button class="btn-product" onclick="addToCart('Sistema de Cargos', 24.90, 'cargos')">
+                        <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Pacotes -->
+            <div class="section-header" style="margin-top: 80px;">
+                <h2 class="section-title">📦 Pacotes Especiais</h2>
+                <p class="section-subtitle">Economize comprando pacotes completos</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Pacote Básico</h3>
+                        <div class="pricing-price">
+                            <span class="price">R$ 79,90</span>
+                            <span class="period">/ único</span>
+                        </div>
+                        <p>2 módulos + suporte básico</p>
+                    </div>
+                    <div class="pricing-features">
+                        <p><i class="fas fa-check"></i> Escolha 2 módulos</p>
+                        <p><i class="fas fa-check"></i> Suporte 30 dias</p>
+                        <p><i class="fas fa-check"></i> Instalação básica</p>
+                        <p><i class="fas fa-check"></i> 7 dias de garantia</p>
+                    </div>
+                    <button class="btn-pricing" onclick="addToCart('Pacote Básico WaveX', 79.90, 'basico')">
+                        <i class="fas fa-cart-plus"></i> Comprar Agora
+                    </button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">RECOMENDADO</div>
+                    <div class="pricing-header">
+                        <h3>Pacote Completo</h3>
+                        <div class="pricing-price">
+                            <span class="price">R$ 62,90</span>
+                            <span class="period">/ único</span>
+                            <span class="discount">De R$ 89,70</span>
+                        </div>
+                        <p>Todos os módulos + bônus</p>
+                    </div>
+                    <div class="pricing-features">
+                        <p><i class="fas fa-check"></i> 3 módulos completos</p>
+                        <p><i class="fas fa-check"></i> Suporte 6 meses</p>
+                        <p><i class="fas fa-check"></i> Instalação assistida</p>
+                        <p><i class="fas fa-check"></i> 30 dias de garantia</p>
+                        <p><i class="fas fa-check"></i> Atualizações grátis</p>
+                    </div>
+                    <button class="btn-pricing" onclick="addToCart('Pacote Completo WaveX', 62.90, 'complete')">
+                        <i class="fas fa-gem"></i> Comprar Agora
+                    </button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Empresarial</h3>
+                        <div class="pricing-price">
+                            <span class="price">R$ 149,90</span>
+                            <span class="period">/ único</span>
+                        </div>
+                        <p>Para grandes servidores</p>
+                    </div>
+                    <div class="pricing-features">
+                        <p><i class="fas fa-check"></i> Todos os módulos</p>
+                        <p><i class="fas fa-check"></i> Suporte vitalício</p>
+                        <p><i class="fas fa-check"></i> Customizações</p>
+                        <p><i class="fas fa-check"></i> Instalação premium</p>
+                        <p><i class="fas fa-check"></i> 90 dias garantia</p>
+                    </div>
+                    <button class="btn-pricing" onclick="addToCart('Plano Empresarial WaveX', 149.90, 'empresarial')">
+                        <i class="fas fa-crown"></i> Comprar Agora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Perguntas Frequentes -->
+    <section id="faq" class="why-choose">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">❓ Perguntas Frequentes</h2>
+                <p class="section-subtitle">Tire suas dúvidas sobre as compras</p>
+            </div>
+            
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Entrega</h3>
+                    <p>Como recebo o bot após a compra?</p>
+                    <ul class="why-features">
+                        <li><i class="fas fa-check"></i> Entrega imediata via email</li>
+                        <li><i class="fas fa-check"></i> Link de convite do bot</li>
+                        <li><i class="fas fa-check"></i> Tutorial de instalação</li>
+                    </ul>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Garantia</h3>
+                    <p>E se o bot não funcionar?</p>
+                    <ul class="why-features">
+                        <li><i class="fas fa-check"></i> 7 dias de garantia</li>
+                        <li><i class="fas fa-check"></i> Reembolso integral</li>
+                        <li><i class="fas fa-check"></i> Suporte técnico gratuito</li>
+                    </ul>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Pagamento</h3>
+                    <p>Quais formas de pagamento?</p>
+                    <ul class="why-features">
+                        <li><i class="fas fa-check"></i> PIX (instantâneo)</li>
+                        <li><i class="fas fa-check"></i> Cartão de crédito</li>
+                        <li><i class="fas fa-check"></i> PayPal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="live-stats" style="text-align: center; padding: 60px 0;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Pronto para transformar seu servidor?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 40px; color: var(--gray);">
+                Mais de 500 servidores já usam WaveX. Junte-se a eles!
+            </p>
+            <button class="btn-primary" style="font-size: 1.2rem; padding: 18px 40px;" onclick="window.location.href='#all-products'">
+                <i class="fas fa-bolt"></i> Ver Todos os Produtos
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 WaveX. Todos os direitos reservados. | <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
+                <p style="margin-top: 10px; font-size: 12px;">Esta é uma página de demonstração. Para compras reais, entre em contato.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        // Inicializar carrinho na página de compras
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCart();
+        });
+    </script>
+</body>
+</html>
