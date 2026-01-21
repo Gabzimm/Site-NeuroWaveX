@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
     simulateOnlineUsers();
     observeElements();
+    updateCart();
 });
 
 // Configurar event listeners
@@ -70,6 +71,252 @@ function toggleMenu() {
     navLinks.classList.toggle('active');
 }
 
+// Sistema de Carrinho
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Funções do Carrinho
+function toggleCart() {
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartOverlay = document.getElementById('cartOverlay');
+    
+    cartSidebar.classList.toggle('active');
+    cartOverlay.classList.toggle('active');
+}
+
+function addToCart(productName, price, type = 'individual') {
+    const existingItem = cart.find(item => 
+        item.name === productName && item.type === type
+    );
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            name: productName,
+            price: price,
+            type: type,
+            quantity: 1
+        });
+    }
+    
+    updateCart();
+    saveCart();
+    
+    showNotification(`"${productName}" adicionado ao carrinho!`);
+}
+
+function addCartIndividual() {
+    const checkboxes = document.querySelectorAll('.feature-selector input[type="checkbox"]:checked');
+    if (checkboxes.length === 0) {
+        showNotification('Selecione pelo menos um módulo!');
+        return;
+    }
+    
+    checkboxes.forEach(checkbox => {
+        const label = checkbox.nextElementSibling.textContent;
+        const productName = label.split('(+')[0].trim();
+        const priceMatch = label.match(/R\$ (\d+,\d+)/);
+        if (priceMatch) {
+            const price = parseFloat(priceMatch[1].replace(',', '.'));
+            addToCart(productName, price, 'individual');
+        }
+    });
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+    saveCart();
+}
+
+function updateQuantity(index, change) {
+    cart[index].quantity += change;
+    
+    if (cart[index].quantity <= 0) {
+        removeFromCart(index);
+    } else {
+        updateCart();
+        saveCart();
+    }
+}
+
+function updateCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartCount = document.querySelector('.cart-count');
+    
+    // Atualizar contador
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+    
+    // Atualizar lista de itens
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="empty-cart">Seu carrinho está vazio</p>';
+        cartTotal.textContent = 'R$ 0,00';
+        return;
+    }
+    
+    let total = 0;
+    let itemsHTML = '';
+    
+    cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        itemsHTML += `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p>R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                </div>
+                <div class="cart-item-actions">
+                    <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                    <button class="remove-item" onclick="removeFromCart(${index})">Remover</button>
+                </div>
+            </div>
+        `;
+    });
+    
+    cartItems.innerHTML = itemsHTML;
+    cartTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+}
+
+function clearCart() {
+    if (cart.length === 0) return;
+    
+    if (confirm('Tem certeza que deseja limpar o carrinho?')) {
+        cart = [];
+        updateCart();
+        saveCart();
+        showNotification('Carrinho limpo com sucesso!');
+    }
+}
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Sistema de Checkout
+function checkout() {
+    if (cart.length === 0) {
+        showNotification('Adicione itens ao carrinho antes de finalizar a compra!');
+        return;
+    }
+    
+    // Modal de checkout
+    const modalHTML = `
+        <div class="checkout-modal">
+            <div class="checkout-header">
+                <h2><i class="fas fa-credit-card"></i> Finalizar Compra</h2>
+                <button class="close-checkout">&times;</button>
+            </div>
+            <div class="checkout-body">
+                <div class="payment-methods">
+                    <h3>Escolha a forma de pagamento:</h3>
+                    <div class="method-grid">
+                        <div class="method-option" onclick="selectPayment('pix')">
+                            <div class="method-icon pix">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <span>PIX</span>
+                            <p>Pagamento instantâneo</p>
+                        </div>
+                        <div class="method-option" onclick="selectPayment('credit')">
+                            <div class="method-icon credit">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <span>Cartão</span>
+                            <p>Mastercard/Visa</p>
+                        </div>
+                        <div class="method-option" onclick="selectPayment('paypal')">
+                            <div class="method-icon paypal">
+                                <i class="fab fa-paypal"></i>
+                            </div>
+                            <span>PayPal</span>
+                            <p>Pagamento internacional</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Resumo do Pedido</h3>
+                    <div class="summary-items">
+                        ${cart.map(item => `
+                            <div class="summary-item">
+                                <span>${item.name} x${item.quantity}</span>
+                                <span>R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="summary-total">
+                        <strong>Total:</strong>
+                        <strong id="checkoutTotal">R$ ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2).replace('.', ',')}</strong>
+                    </div>
+                </div>
+                
+                <div class="checkout-actions">
+                    <button class="btn-back" onclick="closeCheckout()">Voltar</button>
+                    <button class="btn-confirm" onclick="processPayment()">
+                        <i class="fas fa-lock"></i> Confirmar Pagamento
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="checkout-overlay"></div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Adicionar event listeners
+    document.querySelector('.close-checkout').addEventListener('click', closeCheckout);
+    document.querySelector('.checkout-overlay').addEventListener('click', closeCheckout);
+    
+    // Selecionar PIX por padrão
+    selectPayment('pix');
+}
+
+function selectPayment(method) {
+    const methods = document.querySelectorAll('.method-option');
+    methods.forEach(m => m.classList.remove('selected'));
+    
+    const selectedMethod = document.querySelector(`[onclick="selectPayment('${method}')"]`);
+    if (selectedMethod) {
+        selectedMethod.classList.add('selected');
+    }
+}
+
+function processPayment() {
+    showNotification('Processando pagamento... Aguarde!');
+    
+    // Simular processamento
+    setTimeout(() => {
+        showNotification('🎉 Pagamento realizado com sucesso! Em breve você receberá o bot.');
+        
+        // Simular envio de email
+        setTimeout(() => {
+            showNotification('📧 Instruções de instalação enviadas para seu email!');
+        }, 2000);
+        
+        // Limpar carrinho após sucesso
+        cart = [];
+        updateCart();
+        saveCart();
+        
+        closeCheckout();
+        toggleCart(); // Fechar carrinho
+    }, 3000);
+}
+
+function closeCheckout() {
+    const modal = document.querySelector('.checkout-modal');
+    const overlay = document.querySelector('.checkout-overlay');
+    
+    if (modal) modal.remove();
+    if (overlay) overlay.remove();
+}
+
 // Estatísticas dinâmicas
 const stats = {
     activeUsers: 1247,
@@ -132,12 +379,24 @@ function updateStats() {
 
 // Simular usuários online
 function simulateOnlineUsers() {
-    const onlineUsers = document.getElementById('onlineUsers');
-    if (!onlineUsers) return;
+    const onlineCounter = document.getElementById('onlineUsers');
+    if (!onlineCounter) return;
     
+    // Criar elemento se não existir
+    if (!document.querySelector('.online-counter')) {
+        const counterHTML = `
+            <div class="online-counter">
+                <div class="online-dot"></div>
+                <span class="online-count">25</span> pessoas online agora
+            </div>
+        `;
+        onlineCounter.innerHTML = counterHTML;
+    }
+    
+    // Atualizar contador
     setInterval(() => {
-        const count = Math.floor(Math.random() * 15) + 20; // 20-35 pessoas
-        const countEl = onlineUsers.querySelector('.online-count');
+        const count = Math.floor(Math.random() * 15) + 20;
+        const countEl = document.querySelector('.online-count');
         if (countEl) {
             countEl.textContent = count;
         }
@@ -186,31 +445,6 @@ function updatePrice() {
     }
 }
 
-// Carrinho (simulação)
-function addToCart(type) {
-    let message = '';
-    
-    switch(type) {
-        case 'individual':
-            const checkboxes = document.querySelectorAll('.feature-selector input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) {
-                message = 'Selecione pelo menos um módulo!';
-            } else {
-                message = 'Módulos adicionados ao carrinho!';
-            }
-            break;
-            
-        case 'complete':
-            message = 'Pacote completo adicionado ao carrinho!';
-            break;
-            
-        default:
-            message = 'Produto adicionado ao carrinho!';
-    }
-    
-    showNotification(message);
-}
-
 // Notificação
 function showNotification(message) {
     // Criar elemento de notificação
@@ -223,41 +457,6 @@ function showNotification(message) {
     
     // Adicionar ao body
     document.body.appendChild(notification);
-    
-    // Estilo da notificação
-    const style = document.createElement('style');
-    style.textContent = `
-        .notification {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            background: var(--gradient);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            z-index: 3000;
-            font-weight: 500;
-        }
-        
-        .notification.show {
-            transform: translateX(-50%) translateY(0);
-        }
-        
-        .notification i {
-            font-size: 20px;
-        }
-    `;
-    
-    if (!document.querySelector('style[data-notification]')) {
-        style.setAttribute('data-notification', 'true');
-        document.head.appendChild(style);
-    }
     
     // Mostrar e depois remover
     setTimeout(() => notification.classList.add('show'), 10);
